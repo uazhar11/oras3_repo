@@ -1,0 +1,200 @@
+---
+title: "Sports centre simulation"
+subtitle: 'Group 3'
+author: "Usama Azhar, Aayush Negi, Havish Bandam, Komal Varshney, Tom Hutchens, Jose Mendoza"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  bookdown::pdf_document2:
+    citation_package: natbib
+    df_print: kable
+    extra_dependencies:
+      caption: labelfont={bf}
+    fig_caption: yes
+    highlight: haddock
+    keep_tex: yes
+    number_sections: yes
+    toc: yes
+biblio-style: apalike
+email: studenta@cardiff.ac.uk
+fontfamily: times
+fontsize: 11pt
+geometry: margin=1in
+link-citations: yes
+bibliography: refs.bib
+
+abstract: The present document is a coursework report for the module MAT021 Foundations of Operational Research and Analytics for the academic year 2021-2022. The work contains a real case study of a leisure-sports centre with the intention of optimising 
+---
+
+<!-- set knitr options here -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- main body starts here -->
+
+\pagebreak
+
+# Introduction {#intro}
+
+
+
+
+
+
+
+# Background {#sec:background}
+
+During these challenging times under the covid-19 pandemic, strict measures have been addressed to leisure & sports centres such as gyms, swimming pools, etc. as these are believed to be more vulnerable to the spread of the virus due to the nature of the activities performed. Managers and specialists have focused on optimising the utilisation of the resources and availability of their spaces in order to ease the application of self distancing rules. These circumstances offer a good opportunity for simulation and optimization work as managers and gym instructors need to cope with the downsized capacity of their centers at the time they try to reduce idle time on equipment and resources that cannot be accessed due to restricted capacity.
+
+The present work will look into the aforementioned leisure centre capacity, resources, staffing to present a solution to optimise these resources. More information about UK government guidance for leisure centres can be found in Appendix III.
+
+
+
+
+
+
+
+
+
+# Data collection and preparation
+
+## Problem definition
+The *present* model _attempts_ to simulate 
+
+
+1. Recommendation on buying new equipment (Gym)
+Answer :  By analyzing the queue for free weights,cardio equipment and Machines we can suggest the number of equipments we need to increase
+
+2. Convolution of Swim lanes?
+Answer : I have observed there are way too many members in the fast lane so convolution of medium and slow lanes and increasing the size of fast lane can make the congestion in the fast lane a bit less
+
+3. Some of the activities happening in Dance studio 1 have a waitlist ?
+Answer : We can use the model to select how we can mitigate the number of people in the waitlist
+
+4. Resource Optimization ?
+Answer : Resource optimization in following areas :
+
+- Pool : Convolution of lanes may result in work hours of lifeguards which can inturn help in reduction of staff
+- Reception : By looking at the busy and non busy hours we can reduce the part time and full time staff
+- Dance studio 1 : Some of the exercises like zumba and pilates have same instructors so by looking at the data we can merge two - classes of the same type which will result in decrease of one or two trainers
+- Also for the classes which have a waitlist we can simply just suggest that number of trainers to be increased this is not actually resource optimization but this way we can optimize queue in the waitlist
+
+
+## Activities and resources
+
+- The list of activities that are available are:
+
+| Gym              | Cycling track     | Swimming            | Studio      | Cycling studio    |
+| ---              | -------------     | --------            | ------      | --------------    |
+| - Machines       | - Casual cycling  | - Swim for all      | - Yoga      | - Group cycling   |
+| - Weight lifting | - Learn to ride   | - Swim for fitness  | - Aerobics  |                   |
+|                  | - Better go ride  | - Swim for 60+      | - Pilates   |                   |
+|                  |                   | - Swim for women    | - Circuits  |                   |
+|                  |                   | - Aqua aerobics     | - Zumba     |                   |
+|                  |                   |                     | - Box fit   |                   |
+
+
+- The list of resources linked to each activity are shown below:
+
+| Gym               | Cycling track     | Swimming            | Studio               | Cycling studio    |
+| ---               | -------------     | --------            | ------               | --------------    |
+| - Trainers        | - Equipment       | - Life guard        | - Class instructors  | - Lead trainer    |
+| - Support staff   |                   | - Trainer           |                      |                   |
+| - Personal trainer|                   |                     |                      |                   |                   
+
+
+
+
+
+
+
+# Simulation Model
+
+
+## Strategy and approach
+
+Once the data was collected and the activity flow diagram was complete thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
+
+From the data it was decided that there were three major areas that the model should cover: non-arrivals, late arrivals and length of time spent with the doctor. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model. The main measure obtained from the
+
+
+
+
+
+
+# Experiments and tests
+
+## Verification
+
+## Validation
+
+
+
+
+
+
+# Scenario testing
+
+## Scenario 1
+
+## Scenario 2
+
+
+
+
+
+
+# (TEST ONLY) Maths 
+
+## Equations
+
+- Arrival times are modelled following an exponential distribution: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
+
+![Exponential distribution (\#fig:bb1)](exp_dist.jpg){width=50%}
+
+\pagebreak
+
+
+
+
+
+
+# Appendix 1
+- This is the first appendix
+- First appendix
+
+\pagebreak
+
+
+
+
+# Appendix 2
+Second appendix without listing item
+
+\pagebreak
+
+
+
+
+# Appendix 3
+
+More information about the UK government advice and guidance for leisure and sport centres can be found in the below link:
+
+[https://www.gov.uk/government/publications/guidance-on-coronavirus-covid-19-measures-for-grassroots-sport-participants-providers-and-facility-operators/guidance-on-coronavirus-covid-19-measures-for-grassroots-sport-participants-providers-and-facility-operators]
+
+\pagebreak
+
+
+
+
+
+# Citations 
+See for example [@nelson01] and [@pidd01].
+
+
+
+
+
