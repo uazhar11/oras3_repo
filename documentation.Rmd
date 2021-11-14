@@ -1,8 +1,9 @@
 ---
-title: "Sports centre simulation"
+title: "Maindy leisure centre"
 subtitle: 'Group 3'
 author: "Usama Azhar, Aayush Negi, Havish Bandam, Komal Varshney, Tom Hutchens, Jose Mendoza"
 date: "`r format(Sys.time(), '%d %B %Y')`"
+
 output:
   pdf_document:
     toc: yes
@@ -16,6 +17,7 @@ output:
     keep_tex: yes
     number_sections: yes
     toc: yes
+    
 biblio-style: apalike
 email: studenta@cardiff.ac.uk
 fontfamily: times
@@ -24,7 +26,7 @@ geometry: margin=1in
 link-citations: yes
 bibliography: refs.bib
 
-abstract: The present document is a coursework report for the module MAT021 Foundations of Operational Research and Analytics for the academic year 2021-2022. The work contains a real case study of a leisure-sports centre with the intention of optimising 
+abstract: The present document is a coursework report for the module MAT021 Foundations of Operational Research and Analytics for the academic year 2021-2022. The work contains a real case study of a leisure/sports centre with the intention of optimising their resources via simulation methods learnt during this module.
 ---
 
 <!-- set knitr options here -->
@@ -39,6 +41,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction {#intro}
 
+The *COVID-19 pandemic* has brought this fast-moving world to a standstill. The impact of this pandemic is massive, and the only strategy to curb the rapid spread of the disease is to follow social distancing. The imposed lockdown, resulting in the closure of business activities, public places, fitness and activity centers, and overall social life, has hampered many aspects of the lives of people including routine fitness activities. 
+However, as gyms and fitness centers reopen, a regular visit for a workout looks different today. Often, appointments are required to limit the number of individuals in the building at one time, and cleaning regimens have become more thorough to provide patrons a higher standard of cleanliness, and thus, peace of mind. However, policies do vary among boutique fitness brands and mass market gyms. In fact, some of these differences are not only shining a light on what policies work best, but also the particular gyms that may be best-positioned to survive the COVID-19 pandemic. While people may find themselves in different weight classes at the gym, COVID-19 is also peeling back the curtain and exposing a different type of class divide as well—how smaller, more expensive boutique fitness studios with scheduled classes and limited capacity may be benefiting from having a more controlled environment. In addition, because these boutique fitness studios are pricier, they may also have additional resources—including a higher staff-to-patron ratio—and the time between set classes to conduct more frequent cleaning practices.
+
+**Maindy Leisure Center** is a facility that provides amenities like Gym, Swimming Pool, Cycling Track and other fitness classes like Zumba, Aerobics, Pilates, Yoga etc. The aim of this report is to build a model using simul8, to see where we can maximize the resources being used so that the system works more efficiently. Considering the limitation of allowing only a certain number of people in a closed space, it is important to **simulate** and **identify** the **optimum resources** that should be used within a fitness center while following the social distancing regulations.
+
 
 
 
@@ -47,7 +54,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Background {#sec:background}
 
-During these challenging times under the covid-19 pandemic, strict measures have been addressed to leisure & sports centres such as gyms, swimming pools, etc. as these are believed to be more vulnerable to the spread of the virus due to the nature of the activities performed. Managers and specialists have focused on optimising the utilisation of the resources and availability of their spaces in order to ease the application of self distancing rules. These circumstances offer a good opportunity for simulation and optimization work as managers and gym instructors need to cope with the downsized capacity of their centers at the time they try to reduce idle time on equipment and resources that cannot be accessed due to restricted capacity.
+Managers and specialists have focused on optimising the utilisation of the resources and availability of their spaces in order to ease the application of self distancing rules. These circumstances offer a good opportunity for simulation and optimization work as managers and gym instructors need to cope with the downsized capacity of their centers at the time they try to reduce idle time on equipment and resources that cannot be accessed due to restricted capacity.
 
 The present work will look into the aforementioned leisure centre capacity, resources, staffing to present a solution to optimise these resources. More information about UK government guidance for leisure centres can be found in Appendix III.
 
@@ -62,25 +69,30 @@ The present work will look into the aforementioned leisure centre capacity, reso
 # Data collection and preparation
 
 ## Problem definition
-The *present* model _attempts_ to simulate 
+
+Most of the below issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The simulation model will try to give answers to the following issues:
 
 
-1. Recommendation on buying new equipment (Gym)
-Answer :  By analyzing the queue for free weights,cardio equipment and Machines we can suggest the number of equipments we need to increase
+1. Identify areas where more resources are required (i.e. gym equipment)
+By analyzing queues for free weights, cardio equipment and machines, we could identify the areas where more equipment may need to be purchased.
 
-2. Convolution of Swim lanes?
-Answer : I have observed there are way too many members in the fast lane so convolution of medium and slow lanes and increasing the size of fast lane can make the congestion in the fast lane a bit less
 
-3. Some of the activities happening in Dance studio 1 have a waitlist ?
-Answer : We can use the model to select how we can mitigate the number of people in the waitlist
+2. Convolution of Swim Lanes:
 
-4. Resource Optimization ?
-Answer : Resource optimization in following areas :
+Customers may tend to saturate one swimming lane depending of their preference on swimming speed. Again, by observing how many members populate each lane we can decide whether the size of these lanes need to be redesigend to reduce congestion.
 
-- Pool : Convolution of lanes may result in work hours of lifeguards which can inturn help in reduction of staff
-- Reception : By looking at the busy and non busy hours we can reduce the part time and full time staff
+
+3. Reduce the waitlist for activities, i.e. waitlist for Dance Studio 1.
+We can use the model to select how we can mitigate the number of people in the waitlist
+
+
+4. Resource optimization in following areas :
+
+- Pool : Convolution of lanes may result in work hours of lifeguards which can inturn help in reduction of staff.
+- Reception : By comparing wait times at peak/non peak times, we can reduce part time and full time staff.
 - Dance studio 1 : Some of the exercises like zumba and pilates have same instructors so by looking at the data we can merge two - classes of the same type which will result in decrease of one or two trainers
 - Also for the classes which have a waitlist we can simply just suggest that number of trainers to be increased this is not actually resource optimization but this way we can optimize queue in the waitlist
+
 
 
 ## Activities and resources
@@ -107,6 +119,10 @@ Answer : Resource optimization in following areas :
 
 
 
+## Data collection
+
+Training times and attendance have been collected empirically with visits at the leisure centre. Collected times have been used for sampling purposes only as the centre owner showed concers on whether this activity would have an impact in customer satisfaction.
+
 
 
 
@@ -114,11 +130,27 @@ Answer : Resource optimization in following areas :
 # Simulation Model
 
 
+## Assumption and rules
+
+We worked under the assumption that each activity is a single booking slot with a fixed duration of 1h. Customers won't be allowed to book more than one slot per day, and they will always complete the whole activity (one hour).
+
+
+
 ## Strategy and approach
 
 Once the data was collected and the activity flow diagram was complete thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
 
 From the data it was decided that there were three major areas that the model should cover: non-arrivals, late arrivals and length of time spent with the doctor. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model. The main measure obtained from the
+
+
+
+## Modelling
+
+- Arrival times are modelled following an exponential distribution: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
+
+![Exponential distribution (\#fig:bb1)](exp_dist.jpg){width=30%}
+
+\pagebreak
 
 
 
@@ -141,21 +173,12 @@ From the data it was decided that there were three major areas that the model sh
 ## Scenario 1
 
 ## Scenario 2
-
-
-
-
-
-
-# (TEST ONLY) Maths 
-
-## Equations
-
-- Arrival times are modelled following an exponential distribution: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
-
-![Exponential distribution (\#fig:bb1)](exp_dist.jpg){width=50%}
-
 \pagebreak
+
+
+
+
+
 
 
 
@@ -163,8 +186,7 @@ From the data it was decided that there were three major areas that the model sh
 
 
 # Appendix 1
-- This is the first appendix
-- First appendix
+- Data collection
 
 \pagebreak
 
@@ -172,10 +194,9 @@ From the data it was decided that there were three major areas that the model sh
 
 
 # Appendix 2
-Second appendix without listing item
+Simul8 model
 
 \pagebreak
-
 
 
 
