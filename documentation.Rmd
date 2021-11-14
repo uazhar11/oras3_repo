@@ -61,43 +61,16 @@ The present work will look into the aforementioned leisure centre capacity, reso
 
 
 
-
-
-
-
-
-# Data collection and preparation
-
-## Problem definition
-
-Most of the below issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The simulation model will try to give answers to the following issues:
-
-
-1. Identify areas where more resources are required (i.e. gym equipment)
-By analyzing queues for free weights, cardio equipment and machines, we could identify the areas where more equipment may need to be purchased.
-
-
-2. Convolution of Swim Lanes:
-
-Customers may tend to saturate one swimming lane depending of their preference on swimming speed. Again, by observing how many members populate each lane we can decide whether the size of these lanes need to be redesigend to reduce congestion.
-
-
-3. Reduce the waitlist for activities, i.e. waitlist for Dance Studio 1.
-We can use the model to select how we can mitigate the number of people in the waitlist
-
-
-4. Resource optimization in following areas :
-
-- Pool : Convolution of lanes may result in work hours of lifeguards which can inturn help in reduction of staff.
-- Reception : By comparing wait times at peak/non peak times, we can reduce part time and full time staff.
-- Dance studio 1 : Some of the exercises like zumba and pilates have same instructors so by looking at the data we can merge two - classes of the same type which will result in decrease of one or two trainers
-- Also for the classes which have a waitlist we can simply just suggest that number of trainers to be increased this is not actually resource optimization but this way we can optimize queue in the waitlist
-
-
+# Leisure centre layout
 
 ## Activities and resources
 
-- The list of activities that are available are:
+
+The centre is divided in 5 different areas. Each area offers different activities that may share resources in between them. We work under the assumption that each member attending the centre will only use **one** area when visiting the center, after having booked a **one hour slot**. A member spending his/her 1 hour booking may however divide this time into different activities, i.e. 20 minutes weight lifting and 40 minutes using machines when using the Gym.
+
+
+
+- The list of available activities per area are showing in the following table:
 
 | Gym              | Cycling track     | Swimming            | Studio      | Cycling studio    |
 | ---              | -------------     | --------            | ------      | --------------    |
@@ -119,9 +92,54 @@ We can use the model to select how we can mitigate the number of people in the w
 
 
 
+
+
+
+
+# Data collection and preparation
+
+## Problem definition
+
+Most of the below issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The simulation model will try to give answers to the following issues:
+
+
+1. Identify areas where more resources are required (i.e. gym equipment)
+By analyzing queues for free weights, cardio equipment and machines, we could identify the areas where more equipment may need to be purchased.
+
+
+2. Convolution of Swim Lanes:
+Customers may tend to saturate one swimming lane depending of their preference on swimming speed. Again, by observing how many members populate each lane we can decide whether the size of these lanes need to be redesigend to reduce congestion.
+
+
+3. Reduce the waitlist for activities, i.e. waitlist for Dance Studio 1.
+We can use the model to select how we can mitigate the number of people in the waitlist
+
+
+4. Resource optimization in following areas :
+- Pool : Convolution of lanes may result in work hours of lifeguards which can inturn help in reduction of staff.
+- Reception : By comparing wait times at peak/non peak times, we can reduce part time and full time staff.
+- Dance studio 1 : Some of the exercises like zumba and pilates have same instructors so by looking at the data we can merge two - classes of the same type which will result in decrease of one or two trainers
+- Also for the classes which have a waitlist we can simply just suggest that number of trainers to be increased this is not actually resource optimization but this way we can optimize queue in the waitlist
+
+
+
+
+
+
+
+
+
 ## Data collection
 
 Training times and attendance have been collected empirically with visits at the leisure centre. Collected times have been used for sampling purposes only as the centre owner showed concers on whether this activity would have an impact in customer satisfaction.
+
+Sample data manually collected is shown in Appendix I.
+
+
+
+
+
+
 
 
 
@@ -135,22 +153,43 @@ Training times and attendance have been collected empirically with visits at the
 We worked under the assumption that each activity is a single booking slot with a fixed duration of 1h. Customers won't be allowed to book more than one slot per day, and they will always complete the whole activity (one hour).
 
 
+### Gym
 
-## Strategy and approach
+Arrival times have been scheduled following the phone app **Better UK**. Customers will use this application to book 1h slots, starting any time from 06:00 to 20:20, at intervals of 10 minutes. The batch size for each entry slot will be 5 customers. This sets up the maximum hourly capacity of the gym which is 14 users.
 
-Once the data was collected and the activity flow diagram was complete thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
+\pagebreak
 
-From the data it was decided that there were three major areas that the model should cover: non-arrivals, late arrivals and length of time spent with the doctor. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model. The main measure obtained from the
+
+## Layout
+
+- The **Simul8 model** has been deployed using a queuing system as per the aforementioned description:
+
+![Simul8 model](simul8_01.jpg){width=80%}
 
 
 
 ## Modelling
 
-- Arrival times are modelled following an exponential distribution: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
+- Arrival times are modelled following an **exponential distribution**[^1]: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
 
-![Exponential distribution (\#fig:bb1)](exp_dist.jpg){width=30%}
+![Exponential distribution](exp_dist.jpg){width=30%}
+
+[^1]: Exponential distribution is the most suitable choice in queueing theory.
 
 \pagebreak
+
+
+
+## Strategy and approach
+
+
+Once the data was collected and the activity flow diagram was complete thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
+
+From the data it was decided that there were three major areas that the model should cover: resources, queueing size at peak times. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model. The main measure obtained from the
+
+
+\pagebreak
+
 
 
 
@@ -163,6 +202,8 @@ From the data it was decided that there were three major areas that the model sh
 
 ## Validation
 
+\pagebreak
+
 
 
 
@@ -173,6 +214,7 @@ From the data it was decided that there were three major areas that the model sh
 ## Scenario 1
 
 ## Scenario 2
+
 \pagebreak
 
 
@@ -185,22 +227,23 @@ From the data it was decided that there were three major areas that the model sh
 
 
 
-# Appendix 1
+# Appendix I.
 - Data collection
 
+
 \pagebreak
 
 
 
 
-# Appendix 2
+# Appendix II.
 Simul8 model
 
 \pagebreak
 
 
 
-# Appendix 3
+# Appendix III.
 
 More information about the UK government advice and guidance for leisure and sport centres can be found in the below link:
 
