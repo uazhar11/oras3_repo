@@ -61,7 +61,21 @@ The present work will look into the aforementioned leisure centre capacity, reso
 
 
 
-# Leisure centre layout
+
+
+
+# Leisure centre business layout
+
+
+## Elements describing the simulation
+
+- Entities: Customers / leisure centre users, attending the centre to perform a 1h duration sports activity of their choice.
+- Activities: Gym, swimming, or classes, as described below.
+- Events: arrive, start activity, end appointment, leave
+- Queue: The activities are grouped in different areas depending of their nature or equipment needed (i.e. swimming can only take place in the pool). The queues are to enter a the area where the activity will take place, as described below.
+- Resources: Depending on the activity, these will be staffing (monitors) or equipment (bikes or pool capacity).
+- Duration and clock time: All activities will have a fixed duration of 1h, and we will assume that all users perform their activities until completion.
+
 
 ## Activities and resources
 
@@ -70,7 +84,7 @@ The centre is divided in 5 different areas. Each area offers different activitie
 
 
 
-- The list of available activities per area are showing in the following table:
+- The list of available activities per area are shown in the following table:
 
 | Gym              | Cycling track     | Swimming            | Studio      | Cycling studio    |
 | ---              | -------------     | --------            | ------      | --------------    |
@@ -100,7 +114,7 @@ The centre is divided in 5 different areas. Each area offers different activitie
 
 ## Problem definition
 
-Most of the below issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The simulation model will try to give answers to the following issues:
+Most issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The simulation model will try to give answers to the following issues/concerns:
 
 
 1. Identify areas where more resources are required (i.e. gym equipment)
@@ -145,6 +159,9 @@ Sample data manually collected is shown in Appendix I.
 
 
 
+
+
+
 # Simulation Model
 
 
@@ -155,9 +172,26 @@ We worked under the assumption that each activity is a single booking slot with 
 
 ### Gym
 
-Arrival times have been scheduled following the phone app **Better UK**. Customers will use this application to book 1h slots, starting any time from 06:00 to 20:20, at intervals of 10 minutes. The batch size for each entry slot will be 5 customers. This sets up the maximum hourly capacity of the gym which is 14 users.
+- **Arrival times** have been scheduled following the phone app **Better UK**. Customers will use this application to book 1h slots, starting **any time from 06:00 to 20:20, at intervals of 10 minutes**. The batch size for each entry slot will be 5 customers. This sets up the maximum hourly capacity of the gym which is 14 users.
+
+
+### Pool
+- The pool has a capacity of **33 users at the time**. Initially the capacity is divided equally between the three lanes, this is **11 users each**. There is a queue at pool arrival from which all users will route out as a percentage, being 50% of users going for the fast lane, and 25% each for the remaining two. The queue at pool arrival represents the fitting rooms and lockers, therefore all users will need to queue at this point regardless of which lane they prefer to use.
+
+
+### Cycling track
+- The cycling track offers two activities: Better go ride (25% attendance) and casual cycling, where the rest of users go. Same as with the pool, there is a queue before activity choice that represents reception and resources allocation (bikes, etc.)
+
+
+### Dance studio and cycling studio
+- Each activity has already been allocated to a specific room, therefore users who have already book a slot for their class can go to that room directly. Therefore there is no general queue for the dance studio, but for each of the classes.
+
 
 \pagebreak
+
+
+
+
 
 
 ## Layout
@@ -172,7 +206,7 @@ Arrival times have been scheduled following the phone app **Better UK**. Custome
 
 - Arrival times are modelled following an **exponential distribution**[^1]: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
 
-![Exponential distribution](exp_dist.jpg){width=30%}
+![Exponential distribution](exp_dist.jpg){width=40%}
 
 [^1]: Exponential distribution is the most suitable choice in queueing theory.
 
@@ -185,10 +219,7 @@ Arrival times have been scheduled following the phone app **Better UK**. Custome
 
 Once the data was collected and the activity flow diagram was complete thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
 
-From the data it was decided that there were three major areas that the model should cover: resources, queueing size at peak times. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model. The main measure obtained from the
-
-
-\pagebreak
+From the data it was decided that there were three major areas that the model should cover: resources, queueing size at peak times. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model.
 
 
 
@@ -198,11 +229,19 @@ From the data it was decided that there were three major areas that the model sh
 
 # Experiments and tests
 
+
 ## Verification
+
+The weights area is suspected to be a bottleneck as suggested by the site manager. When running the simulation we find that resources are maxed out at peak times and queues building up accordingly.
+
 
 ## Validation
 
+
 \pagebreak
+
+
+
 
 
 
