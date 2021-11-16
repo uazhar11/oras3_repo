@@ -51,7 +51,6 @@ However, as gyms and fitness centers reopen, a regular visit for a workout looks
 
 
 
-
 # Background {#sec:background}
 
 Managers and specialists have focused on optimising the utilisation of the resources and availability of their spaces in order to ease the application of self distancing rules. These circumstances offer a good opportunity for simulation and optimization work as managers and gym instructors need to cope with the downsized capacity of their centers at the time they try to reduce idle time on equipment and resources that cannot be accessed due to restricted capacity.
@@ -71,8 +70,8 @@ The present work will look into the aforementioned leisure centre capacity, reso
 
 - Entities: Customers / leisure centre users, attending the centre to perform a 1h duration sports activity of their choice.
 - Activities: Gym, swimming, or classes, as described below.
-- Events: arrive, start activity, end appointment, leave
-- Queue: The activities are grouped in different areas depending of their nature or equipment needed (i.e. swimming can only take place in the pool). The queues are to enter a the area where the activity will take place, as described below.
+- Events: Arrival, Start activity, end activity, leave
+- Queue: The activities are grouped in different areas depending of their nature and equipment needed (i.e. swimming can only take place in the pool). The queues are to enter the area where the activity will take place, as described below.
 - Resources: Depending on the activity, these will be staffing (monitors) or equipment (bikes or pool capacity).
 - Duration and clock time: All activities will have a fixed duration of 1h, and we will assume that all users perform their activities until completion.
 
@@ -81,29 +80,29 @@ The present work will look into the aforementioned leisure centre capacity, reso
 ## Activities and resources
 
 
-The centre is divided in 5 different areas. Each area offers different activities that may share resources in between them. We work under the assumption that each member attending the centre will only use **one** area when visiting the center, after having booked a **one hour slot**. A member spending his/her 1 hour booking may however divide this time into different activities, i.e. 20 minutes weight lifting and 40 minutes using machines when using the Gym.
+The centre is divided in 4 different areas. Each area offers different activities that may share resources in between them. We work under the assumption that each member attending the centre will only use **one** area when visiting the center, after having booked a **one hour slot**. In order to simplify the model we assume that every user will carry out one and only one activity.
 
 
 
 - The list of available activities per area are shown in the following table:
 
-| Gym              | Cycling track     | Swimming            | Studio      | Cycling studio    |
-| ---              | -------------     | --------            | ------      | --------------    |
-| - Machines       | - Casual cycling  | - Swim for all      | - Yoga      | - Group cycling   |
-| - Weight lifting | - Learn to ride   | - Swim for fitness  | - Aerobics  |                   |
-|                  | - Better go ride  | - Swim for 60+      | - Pilates   |                   |
-|                  |                   | - Swim for women    | - Circuits  |                   |
-|                  |                   | - Aqua aerobics     | - Zumba     |                   |
-|                  |                   |                     | - Box fit   |                   |
+| Gym              | Cycling track     | Swimming            | Studio      |  
+| ---              | -------------     | --------            | ------      |    
+| - Machines area  | - Casual cycling  | - Swim for fitness  | - Yoga      |  
+| - Weight lifting | - Better go ride  |   (3 lanes)         | - Aerobics  |                   
+| - Cardio         |                   |                     | - Pilates   |                   
+|                  |                   |                     | - Circuits  |                   
+|                  |                   |                     | - Zumba     |                   
+|                  |                   |                     | - Box fit   |
 
 
 - The list of resources linked to each activity are shown below:
 
-| Gym               | Cycling track     | Swimming            | Studio               | Cycling studio    |
-| ---               | -------------     | --------            | ------               | --------------    |
-| - Trainers        | - Equipment       | - Life guard        | - Class instructors  | - Lead trainer    |
-| - Support staff   |                   | - Trainer           |                      |                   |
-| - Personal trainer|                   |                     |                      |                   |                   
+| Gym                   | Cycling track     | Swimming            | Studio               | 
+| ---                   | -------------     | --------            | ------               |    
+| - Machines            | - Equipment       | - Lane capacity     | - Class instructors  |    
+| - Cardio equipment    |                   |                     |                      |             
+| - Free weight racks   |                   |                     |                      |                                      
 
 
 
@@ -115,25 +114,24 @@ The centre is divided in 5 different areas. Each area offers different activitie
 
 ## Problem definition
 
-Most issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The simulation model will try to give answers to the following issues/concerns:
+
+Most issues are common to many leisure centres and have been addressed by the centre manager and his main concerns/objectives. The scope of this work is **to perform one improvement action in each of the gym areas**. These improvement oportunities have been identified by **observation when visiting the centre**, speaking to the **business manager about his concerns**, and randomly **asking users about their experience** when visiting the gym and experiencing queueing times.
 
 
-1. Identify areas where more resources are required (i.e. gym equipment)
-By analyzing queues for free weights, cardio equipment and machines, we could identify the areas where more equipment may need to be purchased.
+1. **Gym**: Identify areas where more resources are required (i.e. gym equipment)
+The objective is to reduce queue times for users performing the **free weights** activity. This is the area identified as a main issue.
 
 
-2. Convolution of Swim Lanes:
-Customers may tend to saturate one swimming lane depending of their preference on swimming speed. Again, by observing how many members populate each lane we can decide whether the size of these lanes need to be redesigend to reduce congestion.
+2. **Pool**: Convolution of Swim Lanes:
+Customers may tend to saturate one swimming lane depending of their preference on swimming speed. Again, by observing how many members populate each lane we can decide whether the size of these lanes need to be redesigend to reduce congestion. The **fast lane** is frequently saturated and the objective for this area is to reduce queue times for users using this lane.
 
 
-3. Reduce the waitlist for activities, i.e. waitlist for Dance Studio 1.
-We can use the model to select how we can mitigate the number of people in the waitlist
+3. **Cycling track**: Compare queue times between the two activities carried out in this area.
+As only two activities take place in the cycling track, we will run a simulation to see whether queue times are different to see if resources need to be redistributed.
 
 
-4. Resource optimization in following areas :
-- Pool : Convolution of lanes may result in work hours of lifeguards which can inturn help in reduction of staff.
-- Reception : By comparing wait times at peak/non peak times, we can reduce part time and full time staff.
-- Dance studio 1 : Some of the exercises like zumba and pilates have same instructors so by looking at the data we can merge two - classes of the same type which will result in decrease of one or two trainers
+4. **Studio**: Several activities/classes take place in the studio, but not all of them have the same number of instructors/staff.
+- Some of the exercises like zumba and pilates have same instructors so by looking at the data we can merge two - classes of the same type which will result in decrease of one or two trainers
 - Also for the classes which have a waitlist we can simply just suggest that number of trainers to be increased this is not actually resource optimization but this way we can optimize queue in the waitlist
 
 
@@ -148,9 +146,9 @@ We can use the model to select how we can mitigate the number of people in the w
 
 Training times and attendance have been collected empirically with visits at the leisure centre. Collected times have been used for sampling purposes only as the centre owner showed concers on whether this activity would have an impact in customer satisfaction.
 
-Sample data manually collected is shown in Appendix I.
+Sample data manually collected, area capacity and resources breakdown are shown in Appendix I.
 
-
+\pagebreak
 
 
 
@@ -170,29 +168,19 @@ Sample data manually collected is shown in Appendix I.
 
 We worked under the assumption that each activity is a single booking slot with a fixed duration of 1h. Customers won't be allowed to book more than one slot per day, and they will always complete the whole activity (one hour).
 
-
-### Gym
-
-- **Arrival times** have been scheduled following the phone app **Better UK**. Customers will use this application to book 1h slots, starting **any time from 06:00 to 20:20, at intervals of 10 minutes**. The batch size for each entry slot will be 5 customers. This sets up the maximum hourly capacity of the gym which is 14 users.
+In additon, the model works under the condition that **all areas are always fully occupied.** For example, having the gym a capacity of 40 users, the scheduled arrivals will always feed the areas until reaching this maximum capacity.
 
 
-### Pool
-- The pool has a capacity of **33 users at the time**. Initially the capacity is divided equally between the three lanes, this is **11 users each**. There is a queue at pool arrival from which all users will route out as a percentage, being 50% of users going for the fast lane, and 25% each for the remaining two. The queue at pool arrival represents the fitting rooms and lockers, therefore all users will need to queue at this point regardless of which lane they prefer to use.
+## Arrival times
+
+- **Arrival times** have been scheduled in accordance with the phone app **Better UK**, that customers use to book slots at the centre. They will book 1h slots, starting **any time from 06:00 to 20:20, at intervals of 10 minutes**. 
+
+- **Scheduled arrivals**: With a daily program running **from 06:00 to 20:20**, new customers are allowed to get into any of the areas at intervals of 10 minutes. The batch size (number of customers allowed to get in at every slot) will vary trying to reflect real life attendance: The first batch will be 6 customers, followed by 3 customers per slot until 14:00, then 5 per slot until closure at 20:20.
 
 
-### Cycling track
-- The cycling track offers two activities: Better go ride (25% attendance) and casual cycling, where the rest of users go. Same as with the pool, there is a queue before activity choice that represents reception and resources allocation (bikes, etc.)
+## Simulation running times
 
-
-### Dance studio and cycling studio
-- Each activity has already been allocated to a specific room, therefore users who have already book a slot for their class can go to that room directly. Therefore there is no general queue for the dance studio, but for each of the classes.
-
-
-\pagebreak
-
-
-
-
+- The model will run for **48 hours** to account for day to day variability. Model units have been set up in **minutes**.
 
 
 ## Layout
@@ -201,26 +189,84 @@ We worked under the assumption that each activity is a single booking slot with 
 
 ![Simul8 model](simul8_01.jpg){width=80%}
 
+1.Entries: The system has 4 different entries corresponding to each of the areas in the leisure centre. Users will show themselves into the area they have booked their slot for, at arrival.
+
+2.Area queue: The first queue a user will find is the area queue. The purpose of this queue in the model is to model the distribution of users that will choose a different activity. For example, from the gym queue, 60% of users will go for free weights, 20% for cardio and 20% for machines. These queues can also represent the fitting rooms for people to get ready for their activity of choice.
 
 
-## Modelling
+
+### Gym
+
+- The gym has a capacity of 40 users at the time.
+- We assume that people will attend a **single activity** out of the three (to represent this, we say they wouldn't need to queue in case of going for a second).
+- Utilization of different areas has been modelled using a routing out rule.
+
+| Gym activity      | Route out (%)     | Max resources |
+| ---               | -------------     | ------------- |
+| - Free weights    | - 60              | - 16          |
+| - Machines        | - 20              | - 13          |
+| - Cardio|         | - 20              | - 13          |
+
+
+
+### Pool
+- The pool has a capacity of **33 users at the time**. Initially the capacity is divided equally between the three lanes, this is 11 users each. However, in order to better reflect the actual use of this facility, we are **setting up the capacity as 9 for the fast lane and 7 for the other two**. The reason for this is because when collecting data and observing real people use, it was found that the fast lane was heavily used. This will also help us to run a simulation with capacity changes as discussed in the experiment section.
+
+- There is a queue at pool arrival from which all users will route out as a percentage, being 50% of users going for the fast lane, and 25% each for the remaining two. The queue at pool arrival, that we are using to set the route out sequence, represents the fitting rooms and lockers, therefore all users will need to queue at this point regardless of which lane they prefer to use. 
+
+| Lane              | Route out (%)     | Max resources |
+| ---               | -------------     | ------------- |
+| - Fast lane       | - 50              | - 9           |
+| - Medium lane     | - 25              | - 7           |
+| - Slow lane       | - 25              | - 7           |
+
+\pagebreak
+
+### Cycling track
+- The cycling track offers two activities: Better go ride (25% attendance) and casual cycling, where the rest of users go (75%). Same as with the pool, there is a queue before the activity of choice that represents reception, resources allocation, and routing out. The resources are the number of bikes (10) shared for both activities.
+
+
+### Dance studio and cycling studio
+- Each activity has already been allocated to a specific room, therefore users who have already book a slot for their class can go to that room directly. Hence there is no general queue for the dance studio, but for each of the classes.
+
+| Activity        |  Trainers | People per class |
+| ------          | ------    |     -------      |
+| - Yoga          |  1        |15                |
+| - Aerobics      |  1        |15                |
+| - Pilates       |  2        |11                |
+| - Circuits      |  3        |10                |
+| - Zumba         |  2        |10                |
+| - Box fit       |  2        |15                |
+| - Group cycling |  1        |15                |
+
+
+
+
+
+
+
+## Modelling and inter arrival times
 
 - Arrival times are modelled following an **exponential distribution**[^1]: $$ f(x; \lambda) = \lambda e^{-\lambda x} | x\ge 0$$
 
+We are using this distribution to model the arrival queue at each activity. The expected value $E(X) = 1/\lambda$ will help us to model the hourly inter-arrival times. As per the scheduled arrival plan discussed bellow, new users are allowed to get in every 10 minutes, this is 6 arrivals per hour, $\lambda = 1/60$. Exponential distributions have been applied to all queues in the model, and fixed time for each of the activities (60 mins).
+
 ![Exponential distribution](exp_dist.jpg){width=40%}
 
-[^1]: Exponential distribution is the most suitable choice in queueing theory.
+[^1]: The exponential distribution is the most suitable choice in queueing theory.
 
-\pagebreak
+
 
 
 
 ## Strategy and approach
 
 
-Once the data was collected and the activity flow diagram was complete thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
+Once the data was collected and the activity flow diagram was complete, thought was then given to the creation of the model itself. The simulation software Simul8 was used to form the model. This is a process-based software, meaning that the entities flow through the model until they are blocked, either by a time-based obstacle or for a condition to become true.
 
-From the data it was decided that there were three major areas that the model should cover: resources, queueing size at peak times. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model.
+From the data it was decided that there were three major areas that the model should cover: resources and queueing size. The collected data enabled probability distributions to be placed on these events so that the element of randomness was accounted for in the model.
+
+Several simulation runs will be performed following a different strategy for each area as described above.
 
 
 
@@ -231,12 +277,39 @@ From the data it was decided that there were three major areas that the model sh
 # Experiments and tests
 
 
-## Verification
-
-The weights area is suspected to be a bottleneck as suggested by the site manager. When running the simulation we find that resources are maxed out at peak times and queues building up accordingly.
+## Verification & Validation
 
 
-## Validation
+### Gym
+
+As previously stated, our focus is the **free weights** activity. The current maximum resources in this area is 16 (16 racks or users working out simultaneously). When visiting the facilities it was observed that there is space enough to increase the resources up to *26* racks. When running the simulation under these new conditions, it was found that **queue times were reduced by 8% therefore this solution/investment was adviced to the site manager.**.
+
+### Pool
+
+The strategy for this area was to **ease the use of the fast line**, as this was heavily congested when collecting data. The strategy was to reduce space in the other two lanes (medium and slow speed) consequently increasing the size of the fast lane. To represent this in the Simul8 model, resources were redistributed as follows:
+
+|Lane    | Initial resources | New resources |
+| -----  | ------            | ------        |
+|Fast    |9                  |13             |
+|Medium  |7                  |5              |
+|Slow    |7                  |5              |
+
+Re-running the simulation under these conditions **reduced the queue times from the last lane by 30%**. This action was adviced to the site manager.
+
+
+### Cycling track
+
+Queue times between both activities were found similar, as a result no resource re-distribution would result in a balance improvement.
+
+
+### Studio 
+
+The main action for this area was to redistribute the trainers/instructors into different classes.
+
+The **yoga** activity, whose resource allocation was initially 3 trainers, was found to have an utilization of 11% only.
+
+
+
 
 
 \pagebreak
@@ -249,11 +322,10 @@ The weights area is suspected to be a bottleneck as suggested by the site manage
 
 
 
-# Scenario testing
+# Conclusions
+ 
 
-## Scenario 1
 
-## Scenario 2
 
 \pagebreak
 
@@ -277,21 +349,36 @@ The weights area is suspected to be a bottleneck as suggested by the site manage
 
 
 # Appendix II.
-Simul8 model
+
+## Scheduled arrival times
+
+Arrival times in the Gym and Pool areas are scheduled as follows:
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+library('lemon')
+knit_print.data.frame <- lemon_print
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, render=lemon_print}
 
 library('readr')
 library('dplyr')
-library('lemon')
-knit_print.data.frame <- lemon_print
+
 
 df_gym <- read_csv('scheduled_arrival_times/gym_arrival_schedule.csv')
 df_pool <- read_csv('scheduled_arrival_times/pool_arrival_schedule.csv')
-df_studio <- read_csv('scheduled_arrival_times/cycling_track_arrival_schedule.csv')
+df_cycling <- read_csv('scheduled_arrival_times/cycling_track_arrival_schedule.csv')
 
+print('Gym arrival schedule:')
 df_gym
+
+print('Swimming pool arrival schedule:')
+df_pool
+
+print('Cycling track arrival schedule:')
+df_cycling
 
 ```
 
