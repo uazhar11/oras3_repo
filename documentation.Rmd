@@ -76,6 +76,7 @@ The present work will look into the aforementioned leisure centre capacity, reso
 - Resources: Depending on the activity, these will be staffing (monitors) or equipment (bikes or pool capacity).
 - Duration and clock time: All activities will have a fixed duration of 1h, and we will assume that all users perform their activities until completion.
 
+![DES diagram showing one possible simulation branch.](diagram.jpg){width=80%}
 
 ## Activities and resources
 
@@ -277,6 +278,25 @@ The weights area is suspected to be a bottleneck as suggested by the site manage
 
 # Appendix II.
 Simul8 model
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+library('readr')
+library('dplyr')
+library('lemon')
+knit_print.data.frame <- lemon_print
+
+df_gym <- read_csv('scheduled_arrival_times/gym_arrival_schedule.csv')
+df_pool <- read_csv('scheduled_arrival_times/pool_arrival_schedule.csv')
+df_studio <- read_csv('scheduled_arrival_times/cycling_track_arrival_schedule.csv')
+
+df_gym
+
+```
+
+
+
 
 \pagebreak
 
